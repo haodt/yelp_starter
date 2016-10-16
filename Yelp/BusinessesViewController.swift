@@ -15,12 +15,14 @@ class BusinessesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-        
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
+        Business.searchWithTerm("Thai", completion: { (businesses: [Business]?, error: Error?) -> Void in
+            if let businesses = businesses {
+                self.businesses = businesses
+
+                for business in businesses {
+                    print(business.name!)
+                    print(business.address!)
+                }
             }
         })
 
