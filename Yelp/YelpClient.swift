@@ -25,12 +25,12 @@ class YelpClient: BDBOAuth1RequestOperationManager {
     var accessToken: String!
     var accessSecret: String!
 
-    static var _sharedInstance: YelpClient?
-    static func sharedInstance() -> YelpClient! {
-        if _sharedInstance == nil {
-            _sharedInstance = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
+    static var _shared: YelpClient?
+    static func shared() -> YelpClient! {
+        if _shared == nil {
+            _shared = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
         }
-        return _sharedInstance
+        return _shared
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -47,11 +47,11 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         self.requestSerializer.saveAccessToken(token)
     }
     
-    func searchWithTerm(_ term: String, completion: @escaping ([Business]?, Error?) -> Void) -> AFHTTPRequestOperation {
-        return searchWithTerm(term, sort: nil, categories: nil, deals: nil, completion: completion)
+    func search(with term: String, completion: @escaping ([Business]?, Error?) -> Void) -> AFHTTPRequestOperation {
+        return search(with: term, sort: nil, categories: nil, deals: nil, completion: completion)
     }
     
-    func searchWithTerm(_ term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: @escaping ([Business]?, Error?) -> Void) -> AFHTTPRequestOperation {
+    func search(with term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: @escaping ([Business]?, Error?) -> Void) -> AFHTTPRequestOperation {
         // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
 
         // Default the location to San Francisco
